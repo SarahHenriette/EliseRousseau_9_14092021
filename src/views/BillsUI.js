@@ -20,7 +20,10 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+  //erreur trouvé
+  //ajout de la fonction permettant de trier les notes dans l'ordre décroissant
+  const antiChrono = (a, b) => ((new Date(a.date) < new Date(b.date)) ? 1 : -1)
+  return (data && data.length) ? data.sort(antiChrono).map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {

@@ -32,6 +32,7 @@ export default class Login {
     this.document.body.style.backgroundColor="#fff"
   }
   //erreur trouvée 
+  //il été écrit employee au lieu de admin dans le querySelector de email et password
   handleSubmitAdmin = e => {
     const user = {
       type: "Admin",
