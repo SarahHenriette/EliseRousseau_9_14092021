@@ -71,9 +71,12 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.firestore = firestore
+
     $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1))
     $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2))
     $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3))
+
+ 
     this.getBillsAllUsers()
     new Logout({ localStorage, onNavigate })
   }
@@ -89,6 +92,7 @@ export default class {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     if (this.counter % 2 === 0) {
+      console.log(this.counter)
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
@@ -97,6 +101,8 @@ export default class {
       $('.vertical-navbar').css({ height: '150vh' })
       this.counter ++
     } else {
+      // console.log(this.counter)
+
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
       $('.dashboard-right-container div').html(`
@@ -133,12 +139,19 @@ export default class {
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
+    console.log("counter" + ":" + this.counter)
+    console.log("index" + ":" + this.index)
     if (this.counter % 2 === 0) {
+      console.log(this.counter % 2 )
+      console.log("modulo")
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
         .html(cards(filteredBills(bills, getStatus(this.index))))
       this.counter ++
     } else {
+      console.log(this.counter % 2 )
+      console.log("non modulo")
+
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
       $(`#status-bills-container${this.index}`)
         .html("")
@@ -146,12 +159,18 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      $(`#open-bill${bill.id}`).click((e) => {     
+        //erreur trouvé 
+        //je remet la variable counter a 0   
+        this.counter = 0
+        this.handleEditTicket(e, bill, bills)
+      })
     })
 
     return bills
 
   }
+  
 
   // not need to cover this function by tests
   getBillsAllUsers = () => {
