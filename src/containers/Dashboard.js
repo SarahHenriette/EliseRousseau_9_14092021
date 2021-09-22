@@ -44,7 +44,7 @@ export const card = (bill) => {
         <span> ${bill.amount} € </span>
       </div>
       <div class='date-type-container'>
-        <span> ${formatDate(bill.date)} </span>
+        <span> ${ bill.date !== "" ? formatDate(bill.date) : formatDate(new Date()) }</span>
         <span> ${bill.type} </span>
       </div>
     </div>

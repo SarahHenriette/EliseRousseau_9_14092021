@@ -19,7 +19,12 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
-    this.firestore
+    //erreur trouvé
+    //si le fichier a l'extension jpeg, jpg ou png j'autorise l'envoi sinon je met une alerte
+    const extensions =/(\.jpg|\.jpeg|\.png)$/i
+    if(extensions.exec(file.name)) {
+      console.log('ok')
+      this.firestore
       .storage
       .ref(`justificatifs/${fileName}`)
       .put(file)
@@ -28,6 +33,11 @@ export default class NewBill {
         this.fileUrl = url
         this.fileName = fileName
       })
+    }else {
+      console.log("pas ok")
+      alert("Le fichier n'est pas correct")
+      e.target.value = ""
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
