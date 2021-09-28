@@ -22,7 +22,7 @@ describe("Given I am connected as an employee", () => {
       window.localStorage.setItem('user', user)
     
       Object.defineProperty(window, 'location', {value: {hash: ROUTES_PATH['Bills']}})
-      screen.getByTestId('icon-window') 
+      // screen.getByTestId('icon-window') 
 
     })
 
