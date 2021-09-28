@@ -7,9 +7,11 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.firestore = firestore
+    console.log(localStorage)
     const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
     if (buttonNewBill) buttonNewBill.addEventListener('click', this.handleClickNewBill)
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
+    console.log(iconEye)
     if (iconEye) iconEye.forEach(icon => {
       icon.addEventListener('click', (e) => this.handleClickIconEye(icon))
     })
@@ -21,14 +23,14 @@ export default class {
   }
 
   handleClickIconEye = (icon) => {
-    console.log(icon)
-    const billUrl = icon.getAttribute("data-bill-url")
+    const billUrl = $(icon).attr("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} /></div>`)
-    $('#modaleFile').modal('show')
+    if (typeof $('#modaleFile').modal === 'function') $('#modaleFile').modal('show')
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */ 
   getBills = () => {
     const userEmail = localStorage.getItem('user') ?
       JSON.parse(localStorage.getItem('user')).email : ""
